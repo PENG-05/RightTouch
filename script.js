@@ -69,22 +69,16 @@ function initGame() {
     document.getElementById('reset-all').addEventListener('click', resetAllCards);
     document.getElementById('reset-selected').addEventListener('click', resetSelectedCard);
     
-    // 修复：确保正确获取关闭按钮并添加事件
-    const closeButton = document.querySelector('.close-modal');
-    if (closeButton) {
-        closeButton.addEventListener('click', function(event) {
-            event.preventDefault();
-            event.stopPropagation();
-            closeModal();
-        });
-        console.log('关闭按钮监听器已添加');
-    } else {
-        console.error('找不到关闭按钮元素');
-    }
+    // 完全重写关闭按钮事件绑定
+    document.querySelector('.close-modal').onclick = function() {
+        closeModal();
+        return false;
+    };
     
-    // 点击模态框外部区域关闭模态框
-    window.addEventListener('click', (event) => {
-        if (event.target === modal) {
+    // 直接使用事件委托处理模态框点击事件
+    modal.addEventListener('click', (event) => {
+        // 如果点击的是模态框本身或关闭按钮，则关闭模态框
+        if (event.target === modal || event.target.classList.contains('close-modal')) {
             closeModal();
         }
     });
@@ -217,20 +211,18 @@ function openModal() {
     }, 10);
 }
 
-// 关闭模态框
+// 关闭模态框 - 简化此函数以确保一定会关闭
 function closeModal() {
-    console.log('关闭模态框函数被调用');
-    modal.style.opacity = '0';
-    setTimeout(() => {
-        modal.style.display = 'none';
-        document.body.style.overflow = ''; // 恢复背景滚动
-        
-        // 如果关闭模态框时没有选择图片，则移除选中状态
-        if (config.selectedCard) {
-            config.selectedCard.classList.remove('selected');
-            config.selectedCard = null;
-        }
-    }, 200);
+    console.log('正在关闭模态框');
+    // 立即隐藏
+    modal.style.display = 'none';
+    document.body.style.overflow = ''; // 恢复背景滚动
+    
+    // 如果关闭模态框时没有选择图片，则移除选中状态
+    if (config.selectedCard) {
+        config.selectedCard.classList.remove('selected');
+        config.selectedCard = null;
+    }
 }
 
 // 更改卡片图片
