@@ -74,37 +74,49 @@ button:hover {
 
 /* 布局样式 - 调整为使用flex布局 */
 .game-board.layout-2x3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 10px;
     max-width: 420px;
     margin: 0 auto 20px;
 }
 
 .game-board.layout-3x3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 10px;
     max-width: 420px;
     margin: 0 auto 20px;
 }
 
 .game-board.layout-3x4 {
-    max-width: 560px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 8px; /* 减小间距 */
+    max-width: 520px; /* 略微调整最大宽度 */
     margin: 0 auto 20px;
 }
 
 .game-board.layout-4x4 {
-    max-width: 560px;
-    margin: 0 auto 20px;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(4, 1fr);
-    gap: 10px;
+    gap: 8px; /* 减小间距 */
+    max-width: 520px;
+    margin: 0 auto 20px;
 }
 
 /* 添加4×5布局样式 */
 .game-board.layout-4x5 {
-    max-width: 680px;  /* 稍微宽一些以适应5列 */
-    margin: 0 auto 20px;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-template-rows: repeat(4, 1fr);
     gap: 10px;
+    max-width: 680px;  /* 稍微宽一些以适应5列 */
+    margin: 0 auto 20px;
 }
 
 .image-selection {
@@ -325,6 +337,27 @@ button:hover {
     
     .modal-body {
         padding: 16px;
+    }
+    
+    /* 移动端保持相同的布局结构，只调整间距和最大宽度 */
+    .game-board.layout-2x3,
+    .game-board.layout-3x3,
+    .game-board.layout-3x4,
+    .game-board.layout-4x4,
+    .game-board.layout-4x5 {
+        max-width: 100%;
+        gap: 8px;
+    }
+    
+    /* 各布局网格模板保持不变，确保行列数与PC端一致 */
+    
+    /* 调整卡片样式使其在网格中正确显示 */
+    .card {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 3/4;
+        margin: 0;
+        border-radius: 6px;
     }
 }
 
@@ -657,4 +690,226 @@ button:hover {
     color: #888;
     border-top: 1px solid #eee;
     padding-top: 15px;
+}
+
+/* 移动端布局修复 - 精简版 */
+@media (max-width: 768px) {
+    /* ...existing code... */
+    
+    /* 简单设置固定的卡片大小而不是响应式百分比 */
+    .card {
+        width: 65px;  /* 固定宽度而非100% */
+        height: 90px; /* 固定高度而非自适应 */
+        margin: 0;
+        border-radius: 4px;
+    }
+    
+    /* 不同布局使用相同的间距 */
+    .game-board.layout-2x3,
+    .game-board.layout-3x3,
+    .game-board.layout-3x4,
+    .game-board.layout-4x4,
+    .game-board.layout-4x5 {
+        gap: 3px;
+    }
+}
+
+/* 小屏幕进一步减小卡片大小 */
+@media (max-width: 480px) {
+    .card {
+        width: 55px;
+        height: 75px;
+        border-radius: 3px;
+    }
+}
+
+/* 超小屏幕额外优化 */
+@media (max-width: 360px) {
+    .card {
+        width: 45px;
+        height: 60px;
+        border-radius: 2px;
+    }
+}
+
+/* 移动端布局修复 - 确保正确的行列结构和适当间距 */
+@media (max-width: 768px) {
+    /* ...existing code... */
+    
+    /* 修复移动端布局 - 使用grid确保不换行 */
+    .game-board {
+        display: grid;  /* 移除flex默认值 */
+        margin: 0 auto 15px;
+    }
+    
+    /* 确保每个布局保持正确的行列数 */
+    .game-board.layout-2x3 {
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        gap: 5px;  /* 减小间距 */
+    }
+    
+    .game-board.layout-3x3 {
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        gap: 5px;
+    }
+    
+    .game-board.layout-3x4 {
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        gap: 4px;  /* 更多列的情况减少间距 */
+    }
+    
+    .game-board.layout-4x4 {
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(4, 1fr);
+        gap: 3px;
+    }
+    
+    .game-board.layout-4x5 {
+        grid-template-columns: repeat(5, 1fr);
+        grid-template-rows: repeat(4, 1fr);
+        gap: 3px;
+    }
+    
+    /* 调整卡片样式使其适合移动端 */
+    .card {
+        width: 100%;  /* 占满网格单元 */
+        height: auto;
+        margin: 0;
+        aspect-ratio: 3/4;  /* 保持卡片比例 */
+        border-radius: 5px;
+    }
+}
+
+/* 小屏手机进一步优化 */
+@media (max-width: 480px) {
+    /* 更小的间距和卡片大小 */
+    .game-board.layout-2x3 {
+        gap: 4px;
+    }
+    
+    .game-board.layout-3x3 {
+        gap: 3px;
+    }
+    
+    .game-board.layout-3x4 {
+        gap: 2px;
+    }
+    
+    .game-board.layout-4x4 {
+        gap: 2px;
+    }
+    
+    .game-board.layout-4x5 {
+        gap: 2px;
+    }
+    
+    .card {
+        border-radius: 3px;
+    }
+}
+
+/* 超小屏幕额外优化 */
+@media (max-width: 360px) {
+    /* 进一步减小间距 */
+    .game-board.layout-3x4,
+    .game-board.layout-4x4,
+    .game-board.layout-4x5 {
+        gap: 1px;
+    }
+    
+    /* 确保按钮不会太大 */
+    .controls button {
+        padding: 3px 6px;
+        font-size: 12px;
+        margin: 2px;
+    }
+}
+
+/* 修复移动端2×3和3×3布局问题 */
+@media (max-width: 768px) {
+    /* ...existing code... */
+    
+    /* 明确为2×3布局设置尺寸 */
+    .game-board.layout-2x3 {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(65px, 1fr));
+        grid-template-rows: repeat(2, auto);
+        gap: 5px;
+        max-width: 230px; /* 3列×65px宽度+间隙 */
+        margin: 0 auto;
+    }
+    
+    /* 明确为3×3布局设置尺寸 */
+    .game-board.layout-3x3 {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(65px, 1fr));
+        grid-template-rows: repeat(3, auto);
+        gap: 5px;
+        max-width: 230px; /* 3列×65px宽度+间隙 */
+        margin: 0 auto;
+    }
+    
+    /* 确保卡片在这些布局中的大小一致 */
+    .game-board.layout-2x3 .card,
+    .game-board.layout-3x3 .card {
+        width: 65px;
+        height: 90px;
+        margin: 0 auto;
+        border-radius: 4px;
+    }
+}
+
+/* 小屏幕设备上进一步调整这些布局 */
+@media (max-width: 480px) {
+    /* ...existing code... */
+    
+    .game-board.layout-2x3 {
+        max-width: 195px; /* 3列×55px宽度+间隙 */
+        grid-template-columns: repeat(3, minmax(55px, 1fr));
+    }
+    
+    .game-board.layout-3x3 {
+        max-width: 195px; /* 3列×55px宽度+间隙 */
+        grid-template-columns: repeat(3, minmax(55px, 1fr));
+    }
+    
+    .game-board.layout-2x3 .card,
+    .game-board.layout-3x3 .card {
+        width: 55px;
+        height: 75px;
+    }
+}
+
+/* 超小屏幕进一步缩小 */
+@media (max-width: 360px) {
+    /* ...existing code... */
+    
+    .game-board.layout-2x3 {
+        max-width: 165px; /* 3列×45px宽度+间隙 */
+        grid-template-columns: repeat(3, minmax(45px, 1fr));
+    }
+    
+    .game-board.layout-3x3 {
+        max-width: 165px; /* 3列×45px宽度+间隙 */
+        grid-template-columns: repeat(3, minmax(45px, 1fr));
+    }
+    
+    .game-board.layout-2x3 .card,
+    .game-board.layout-3x3 .card {
+        width: 45px;
+        height: 60px;
+    }
+}
+
+/* 为PC端卡片设置合适的尺寸 */
+@media (min-width: 769px) {
+    .game-board.layout-3x4 .card,
+    .game-board.layout-4x4 .card {
+        width: 110px;
+        height: 140px;
+        margin: 0;
+    }
 }
