@@ -931,3 +931,352 @@ button:hover {
         pointer-events: none;
     }
 }
+
+/* 修复布局和卡片间隔问题，适配不同设备尺寸 */
+
+/* 整体优化所有布局的间隔 - 桌面和平板通用 */
+.game-board.layout-2x3,
+.game-board.layout-3x3,
+.game-board.layout-3x4,
+.game-board.layout-4x4,
+.game-board.layout-4x5 {
+    gap: 8px; /* 减小默认间距 */
+}
+
+/* iPad和平板设备特定优化 */
+@media only screen 
+and (min-device-width: 768px) 
+and (max-device-width: 1024px) {
+    /* iPad特定布局修复 */
+    .game-board.layout-3x4 {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        gap: 6px; /* 更小的间隙 */
+        max-width: 480px;
+        margin: 0 auto 20px;
+    }
+    
+    .game-board.layout-4x4 {
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(4, 1fr);
+        gap: 6px; /* 更小的间隙 */
+        max-width: 480px;
+    }
+    
+    /* 针对iPad上的卡片大小调整 */
+    .game-board.layout-3x4 .card,
+    .game-board.layout-4x4 .card {
+        width: 90px;
+        height: 120px;
+        margin: 0;
+    }
+    
+    /* 其他布局也减小间距 */
+    .game-board.layout-2x3,
+    .game-board.layout-3x3,
+    .game-board.layout-4x5 {
+        gap: 6px;
+    }
+}
+
+/* 纵向iPad Pro和大型平板 */
+@media only screen 
+and (min-device-width: 1024px) 
+and (max-device-width: 1366px) 
+and (orientation: portrait) {
+    .game-board.layout-3x4,
+    .game-board.layout-4x4 {
+        max-width: 560px;
+        gap: 7px;
+    }
+    
+    .game-board.layout-3x4 .card,
+    .game-board.layout-4x4 .card {
+        width: 100px;
+        height: 135px;
+    }
+}
+
+/* 横向iPad的布局调整 */
+@media only screen 
+and (min-device-width: 768px) 
+and (max-device-width: 1024px) 
+and (orientation: landscape) {
+    .game-board.layout-3x4 {
+        max-width: 560px;
+    }
+    
+    .game-board.layout-4x4 {
+        max-width: 560px;
+    }
+    
+    /* 确保卡片大小合适 */
+    .game-board.layout-3x4 .card,
+    .game-board.layout-4x4 .card {
+        width: 95px;
+        height: 125px;
+    }
+}
+
+/* 确保在所有设备上都保持正确的行列布局 */
+.game-board.layout-3x4 {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    grid-template-rows: repeat(3, 1fr) !important;
+}
+
+.game-board.layout-4x4 {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    grid-template-rows: repeat(4, 1fr) !important;
+}
+
+/* 确保在不同设备上维持布局的一致性 */
+@media only screen and (max-width: 1200px) {
+    .game-board {
+        justify-content: center;
+    }
+    
+    /* 所有布局使用相同的小间距 */
+    .game-board.layout-2x3,
+    .game-board.layout-3x3,
+    .game-board.layout-3x4,
+    .game-board.layout-4x4,
+    .game-board.layout-4x5 {
+        gap: 6px;
+    }
+}
+
+/* 调整3×4和4×4布局在iPad和移动端的卡片间隔 */
+
+/* iPad和平板设备优化 - 减小间距 */
+@media only screen 
+and (min-device-width: 768px) 
+and (max-device-width: 1024px) {
+    /* iPad特定布局修复 */
+    .game-board.layout-3x4 {
+        gap: 4px; /* 更小的间隙 */
+        max-width: 460px; /* 稍微减小最大宽度 */
+    }
+    
+    .game-board.layout-4x4 {
+        gap: 4px; /* 更小的间隙 */
+        max-width: 460px;
+    }
+    
+    /* 针对iPad上的卡片大小稍微调整 */
+    .game-board.layout-3x4 .card,
+    .game-board.layout-4x4 .card {
+        width: 87px; /* 稍微减小宽度 */
+        height: 116px; /* 保持比例 */
+    }
+}
+
+/* 移动端更进一步优化间距 */
+@media (max-width: 768px) {
+    /* ...existing code... */
+    
+    /* 特别为3×4和4×4布局减小间距 */
+    .game-board.layout-3x4,
+    .game-board.layout-4x4 {
+        gap: 3px; /* 非常小的间隙 */
+    }
+    
+    /* 小屏幕上的卡片特别调整 */
+    .game-board.layout-3x4 .card,
+    .game-board.layout-4x4 .card {
+        width: 62px; /* 更小的卡片 */
+        height: 86px;
+        border-radius: 3px;
+    }
+}
+
+/* 小屏幕进一步减小间距 */
+@media (max-width: 480px) {
+    /* ...existing code... */
+    
+    .game-board.layout-3x4,
+    .game-board.layout-4x4 {
+        gap: 2px; /* 最小的间隙 */
+    }
+    
+    .game-board.layout-3x4 .card,
+    .game-board.layout-4x4 .card {
+        width: 52px;
+        height: 72px;
+        border-radius: 2px;
+    }
+}
+
+/* 横向iPad进一步优化间距 */
+@media only screen 
+and (min-device-width: 768px) 
+and (max-device-width: 1024px) 
+and (orientation: landscape) {
+    .game-board.layout-3x4,
+    .game-board.layout-4x4 {
+        gap: 5px;
+        max-width: 520px;
+    }
+}
+
+/* 进一步优化3×4和4×4布局在所有设备上的间隙 */
+
+/* PC端布局间隙优化 */
+.game-board.layout-3x4 {
+    gap: 5px; /* 更小的间隙 */
+    max-width: 490px; /* 调整宽度以适应更小的间隙 */
+}
+
+.game-board.layout-4x4 {
+    gap: 4px; /* 更小的间隙 */
+    max-width: 480px; /* 调整宽度以适应更小的间隙 */
+}
+
+/* 为PC端卡片设置更紧凑的尺寸 */
+@media (min-width: 769px) {
+    .game-board.layout-3x4 .card {
+        width: 105px;
+        height: 138px;
+        margin: 0;
+    }
+    
+    .game-board.layout-4x4 .card {
+        width: 103px;
+        height: 136px;
+        margin: 0;
+    }
+}
+
+/* iPad和平板设备上的进一步优化 */
+@media only screen 
+and (min-device-width: 768px) 
+and (max-device-width: 1024px) {
+    /* iPad特定布局修复 */
+    .game-board.layout-3x4 {
+        gap: 3px; /* 更小的间隙 */
+        max-width: 440px; /* 进一步减小最大宽度 */
+    }
+    
+    .game-board.layout-4x4 {
+        gap: 2px; /* 最小的间隙 */
+        max-width: 420px;
+    }
+    
+    /* iPad上的卡片尺寸进一步紧凑 */
+    .game-board.layout-3x4 .card {
+        width: 84px;
+        height: 112px;
+    }
+    
+    .game-board.layout-4x4 .card {
+        width: 82px;
+        height: 109px;
+    }
+}
+
+/* 移动端进一步优化间距 */
+@media (max-width: 768px) {
+    /* ...existing code... */
+    
+    /* 特别为3×4和4×4布局减小间距 */
+    .game-board.layout-3x4 {
+        gap: 2px; /* 极小的间隙 */
+    }
+    
+    .game-board.layout-4x4 {
+        gap: 2px; /* 极小的间隙 */
+    }
+    
+    /* 移动端卡片特别调整 */
+    .game-board.layout-3x4 .card {
+        width: 60px;
+        height: 80px;
+        border-radius: 3px;
+    }
+    
+    .game-board.layout-4x4 .card {
+        width: 58px;
+        height: 77px;
+        border-radius: 3px;
+    }
+}
+
+/* 小屏幕进一步减小间距和卡片大小 */
+@media (max-width: 480px) {
+    /* ...existing code... */
+    
+    .game-board.layout-3x4 {
+        gap: 1px; /* 最小的间隙 */
+    }
+    
+    .game-board.layout-4x4 {
+        gap: 1px; /* 最小的间隙 */
+    }
+    
+    .game-board.layout-3x4 .card {
+        width: 50px;
+        height: 67px;
+        border-radius: 2px;
+    }
+    
+    .game-board.layout-4x4 .card {
+        width: 48px;
+        height: 64px;
+        border-radius: 2px;
+    }
+}
+
+/* 横向iPad进一步优化间距 */
+@media only screen 
+and (min-device-width: 768px) 
+and (max-device-width: 1024px) 
+and (orientation: landscape) {
+    .game-board.layout-3x4 {
+        gap: 3px;
+        max-width: 500px;
+    }
+    
+    .game-board.layout-4x4 {
+        gap: 3px;
+        max-width: 480px;
+    }
+    
+    .game-board.layout-3x4 .card {
+        width: 90px;
+        height: 120px;
+    }
+    
+    .game-board.layout-4x4 .card {
+        width: 88px;
+        height: 118px;
+    }
+}
+
+/* 确保最紧凑的布局在所有设备上都具有最高优先级 */
+.game-board.layout-3x4,
+.game-board.layout-4x4 {
+    gap: 5px !important;
+}
+
+@media (max-width: 1024px) {
+    .game-board.layout-3x4,
+    .game-board.layout-4x4 {
+        gap: 3px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .game-board.layout-3x4,
+    .game-board.layout-4x4 {
+        gap: 2px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .game-board.layout-3x4,
+    .game-board.layout-4x4 {
+        gap: 1px !important;
+    }
+}
