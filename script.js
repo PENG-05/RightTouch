@@ -50,6 +50,59 @@ const layouts = {
 // 添加全局状态变量
 let resetModeActive = false;
 
+// 添加防止滚动触发重置的逻辑
+
+// 添加一个标志变量跟踪游戏初始化状态
+let gameInitialized = false;
+let lastScrollPosition = 0;
+let scrollTimeout;
+
+// 确保卡片状态在滚动时不会丢失
+document.addEventListener('scroll', function(e) {
+    clearTimeout(scrollTimeout);
+    
+    // 使用定时器延迟处理，减少滚动事件频繁触发
+    scrollTimeout = setTimeout(function() {
+        lastScrollPosition = window.scrollY;
+    }, 100);
+});
+
+// 修改初始化函数，避免重复初始化
+function initializeGame(rows, cols, force = false) {
+    if (gameInitialized && !force) {
+        return; // 避免重复初始化
+    }
+    
+    // 保存当前卡片状态
+    let savedCardStates = [];
+    if (gameInitialized) {
+        document.querySelectorAll('.card').forEach(card => {
+            savedCardStates.push({
+                index: card.dataset.index,
+                backgroundImage: card.style.backgroundImage,
+                flipped: card.classList.contains('flipped'),
+                imageSelected: card.getAttribute('data-image-selected')
+            });
+        });
+    }
+    
+    // ...现有的初始化代码...
+    
+    // 如果有保存的状态，恢复它们
+    if (savedCardStates.length > 0) {
+        document.querySelectorAll('.card').forEach(card => {
+            const savedState = savedCardStates.find(state => state.index === card.dataset.index);
+            if (savedState) {
+                card.style.backgroundImage = savedState.backgroundImage;
+                if (savedState.flipped) card.classList.add('flipped');
+                if (savedState.imageSelected) card.setAttribute('data-image-selected', savedState.imageSelected);
+            }
+        });
+    }
+    
+    gameInitialized = true;
+}
+
 // 初始化游戏
 function initGame() {
     // 检测设备类型，为移动设备添加特殊类
@@ -286,6 +339,38 @@ function resetSelectedCard() {
         config.selectedCard = null;
     }
 }
+
+// 添加触摸事件处理，防止滑动误触发
+document.addEventListener('DOMContentLoaded', function() {
+    // ...现有代码...
+    
+    // 捕获触摸事件，防止误触发
+    let touchStartY = 0;
+    
+    document.addEventListener('touchstart', function(e) {
+        touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+    
+    document.addEventListener('touchmove', function(e) {
+        const touchY = e.touches[0].clientY;
+        const touchDiff = Math.abs(touchY - touchStartY);
+        
+        // 如果是垂直滑动(大于15px)，暂时禁用卡片点击
+        if (touchDiff > 15) {
+            document.querySelectorAll('.card').forEach(card => {
+                card.style.pointerEvents = 'none';
+            });
+            
+            // 一段时间后恢复点击
+            clearTimeout(window.reEnablePointerTimeout);
+            window.reEnablePointerTimeout = setTimeout(() => {
+                document.querySelectorAll('.card').forEach(card => {
+                    card.style.pointerEvents = 'auto';
+                });
+            }, 500);
+        }
+    }, { passive: true });
+});
 
 // 页面加载完成后初始化游戏
 document.addEventListener('DOMContentLoaded', initGame);

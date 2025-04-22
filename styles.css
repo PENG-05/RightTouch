@@ -605,6 +605,7 @@ button:hover {
 
 .pay-img {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-around;
 
     @media (max-width: 768px) {
@@ -911,5 +912,22 @@ button:hover {
         width: 110px;
         height: 140px;
         margin: 0;
+    }
+}
+
+/* 防止滚动时的意外触发 */
+@media (max-width: 768px) {
+    .game-board.scrolling .card {
+        pointer-events: none;
+    }
+    
+    /* 确保卡片在滑动时不会触发点击 */
+    .card {
+        touch-action: manipulation;
+    }
+    
+    /* 防止滚动期间的误触 */
+    body.is-scrolling .card {
+        pointer-events: none;
     }
 }
