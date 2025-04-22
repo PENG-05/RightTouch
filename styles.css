@@ -1280,3 +1280,43 @@ and (orientation: landscape) {
         gap: 1px !important;
     }
 }
+
+/* iPad和平板设备的响应式布局 */
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+    /* 针对3x4布局 */
+    .game-board.layout-3x4 {
+        gap: 6px; /* 从10px减小到6px */
+    }
+    
+    /* 针对4x4布局 */
+    .game-board.layout-4x4 {
+        gap: 5px; /* 从8px减小到5px */
+    }
+    
+    /* 调整卡片大小，使其在iPad上更适合 */
+    .game-board.layout-3x4 .card,
+    .game-board.layout-4x4 .card {
+        margin: 2px; /* 从5px减小到2px */
+    }
+    
+    /* 为更大的布局进一步减小间距 */
+    .game-board.layout-4x5 {
+        gap: 4px; /* 从6px减小到4px */
+    }
+    .game-board.layout-4x5 .card {
+        margin: 2px; /* 从4px减小到2px */
+    }
+}
+
+/* 专门针对iPad竖屏模式 */
+@media only screen and (min-width: 768px) and (max-width: 834px) and (orientation: portrait) {
+    .game-board.layout-3x4,
+    .game-board.layout-4x4 {
+        gap: 4px; /* 从6px减小到4px */
+    }
+    
+    .game-board.layout-3x4 .card,
+    .game-board.layout-4x4 .card {
+        margin: 2px; /* 从3px减小到2px */
+    }
+}
