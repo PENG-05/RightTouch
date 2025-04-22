@@ -442,3 +442,23 @@ button:hover {
         gap: 5px;
     }
 }
+
+/* 为重置按钮区域添加样式 */
+.reset-controls {
+    display: flex;
+    gap: 10px;
+}
+
+/* 重置选中图片按钮样式 */
+#reset-selected {
+    padding: 5px 10px;
+    background-color: #f0ad4e;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#reset-selected:hover {
+    background-color: #ec971f;
+}

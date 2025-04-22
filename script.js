@@ -46,6 +46,9 @@ const layouts = {
     '4x4': { rows: 4, cols: 4 }  // 4行4列，共16张卡片
 };
 
+// 添加全局状态变量
+let resetModeActive = false;
+
 // 初始化游戏
 function initGame() {
     // 检测设备类型，为移动设备添加特殊类
@@ -85,6 +88,12 @@ function initGame() {
 
     // 添加窗口调整大小的处理，以适应布局变化
     window.addEventListener('resize', handleResize);
+
+    // 为重置选中图片按钮添加事件监听
+    document.getElementById('reset-selected').addEventListener('click', function() {
+        resetModeActive = true;
+        alert('请点击要重置的图片');
+    });
 }
 
 // 检测是否为移动设备
@@ -165,18 +174,25 @@ function adjustCardSizeForMobile(layoutType) {
 function handleCardClick(event) {
     const card = event.currentTarget;
     
-    // 取消之前的选中状态
-    const previousSelectedCard = document.querySelector('.card.selected');
-    if (previousSelectedCard) {
-        previousSelectedCard.classList.remove('selected');
+    if (resetModeActive) {
+        // 重置模式：直接将卡片重置为背景图片
+        card.querySelector('img').src = config.backgroundImage;
+        card.classList.remove('selected');
+        resetModeActive = false; // 重置完成后关闭重置模式
+    } else {
+        // 取消之前的选中状态
+        const previousSelectedCard = document.querySelector('.card.selected');
+        if (previousSelectedCard) {
+            previousSelectedCard.classList.remove('selected');
+        }
+        
+        // 设置当前卡片为选中状态
+        card.classList.add('selected');
+        config.selectedCard = card;
+        
+        // 显示模态框
+        openModal();
     }
-    
-    // 设置当前卡片为选中状态
-    card.classList.add('selected');
-    config.selectedCard = card;
-    
-    // 显示模态框
-    openModal();
 }
 
 // 创建图片选择网格（在模态框中）
@@ -250,6 +266,7 @@ function resetAllCards() {
         selectedCard.classList.remove('selected');
         config.selectedCard = null;
     }
+    resetModeActive = false; // 确保退出重置模式
 }
 
 // 重置选中的卡片
