@@ -462,3 +462,23 @@ button:hover {
 #reset-selected:hover {
     background-color: #ec971f;
 }
+
+.pay-img {
+    display: flex;
+    justify-content: space-around;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+.pay-img img {
+    width: 200px;
+    height: 200px;
+}
+
+.end-page-text {
+    font-size: 12px;
+    color: red;
+}
