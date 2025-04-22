@@ -43,7 +43,8 @@ const layouts = {
     '2x3': { rows: 2, cols: 3 }, // 2行3列，共6张卡片
     '3x3': { rows: 3, cols: 3 }, // 3行3列，共9张卡片
     '3x4': { rows: 3, cols: 4 }, // 3行4列，共12张卡片
-    '4x4': { rows: 4, cols: 4 }  // 4行4列，共16张卡片
+    '4x4': { rows: 4, cols: 4 },  // 4行4列，共16张卡片
+    '4x5': { rows: 4, cols: 5 }   // 4行5列，共20张卡片
 };
 
 // 添加全局状态变量
@@ -67,6 +68,7 @@ function initGame() {
     document.getElementById('layout-3x3').addEventListener('click', () => setLayout('3x3'));
     document.getElementById('layout-3x4').addEventListener('click', () => setLayout('3x4'));
     document.getElementById('layout-4x4').addEventListener('click', () => setLayout('4x4'));
+    document.getElementById('layout-4x5').addEventListener('click', () => setLayout('4x5'));
     
     // 添加重置按钮事件
     document.getElementById('reset-all').addEventListener('click', resetAllCards);
@@ -125,6 +127,10 @@ function setLayout(layoutType) {
     if (layoutType === '4x4') {
         gameBoard.style.display = 'grid';
         gameBoard.style.gridTemplateColumns = 'repeat(4, 1fr)';
+        gameBoard.style.gridTemplateRows = 'repeat(4, 1fr)';
+    } else if (layoutType === '4x5') {
+        gameBoard.style.display = 'grid';
+        gameBoard.style.gridTemplateColumns = 'repeat(5, 1fr)';
         gameBoard.style.gridTemplateRows = 'repeat(4, 1fr)';
     } else {
         gameBoard.style.display = 'flex';
