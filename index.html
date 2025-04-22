@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>翻牌游戏</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="controls">
+            <div class="layout-controls">
+                <span>布局选择：</span>
+                <button id="layout-2x3">2x3</button>
+                <button id="layout-3x3">3x3</button>
+                <button id="layout-3x4">3x4</button>
+                <button id="layout-4x4">4x4</button>
+            </div>
+            <div class="reset-controls">
+                <button id="reset-all">全部重置</button>
+            </div>
+        </div>
+        
+        <div class="game-board" id="game-board">
+            <!-- 翻牌区域，由JavaScript生成 -->
+        </div>
+        
+        <!-- 图片选择模态弹窗 -->
+        <div id="image-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>请选择一张图片</h2>
+                    <span class="close-modal">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div id="modal-image-grid" class="image-grid">
+                        <!-- 图片选择区域，由JavaScript生成 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

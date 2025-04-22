@@ -1,0 +1,423 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.controls {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #f8f8f8;
+    border-radius: 5px;
+}
+
+button {
+    padding: 8px 12px;
+    margin: 0 5px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.game-board {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+
+.card {
+    position: relative;
+    width: 120px;
+    height: 150px;
+    border-radius: 8px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: transform 0.3s;
+    margin: 5px;
+}
+
+.card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card.selected {
+    border: 3px solid #FFC107;
+}
+
+/* 布局样式 - 调整为使用flex布局 */
+.game-board.layout-2x3 {
+    max-width: 420px;
+    margin: 0 auto 20px;
+}
+
+.game-board.layout-3x3 {
+    max-width: 420px;
+    margin: 0 auto 20px;
+}
+
+.game-board.layout-3x4 {
+    max-width: 560px;
+    margin: 0 auto 20px;
+}
+
+.game-board.layout-4x4 {
+    max-width: 560px;
+    margin: 0 auto 20px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.image-selection {
+    padding: 15px;
+    background-color: #f8f8f8;
+    border-radius: 5px;
+}
+
+.image-selection h3 {
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.image-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.image-option {
+    width: 60px;
+    height: 80px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    overflow: hidden;
+    margin: 5px;
+}
+
+.image-option img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.image-option:hover {
+    transform: scale(1.05);
+}
+
+.hidden {
+    display: none;
+}
+
+/* 模态框样式优化 */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(3px);
+}
+
+.modal-content {
+    background-color: #fff;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 800px;
+    max-height: 85vh;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    animation: modalFadeIn 0.3s ease-out;
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.1);
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.modal-header {
+    padding: 18px 24px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 1.4rem;
+    color: #333;
+    font-weight: 600;
+}
+
+.close-modal {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 28px;
+    font-weight: 700;
+    cursor: pointer;
+    color: #666;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s;
+    z-index: 10; /* 确保在最上层 */
+    -webkit-tap-highlight-color: transparent; /* 移除移动端点击高亮 */
+    user-select: none; /* 防止文本选择 */
+}
+
+.close-modal:hover {
+    background-color: rgba(0,0,0,0.05);
+    color: #000;
+}
+
+/* 增加点击区域 */
+.close-modal::before {
+    content: '';
+    position: absolute;
+    width: 44px;
+    height: 44px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.modal-body {
+    padding: 24px;
+    overflow-y: auto;
+    max-height: calc(85vh - 70px);
+}
+
+/* 模态框中的图片网格 */
+.modal .image-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+    gap: 5px;
+    padding: 0;
+}
+
+.image-option {
+    cursor: pointer;
+    border-radius: 4px;
+    overflow: hidden;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    position: relative;
+    aspect-ratio: 3/4;
+    margin: 0;
+}
+
+.image-option:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+}
+
+.image-option:active {
+    transform: scale(0.98);
+}
+
+.image-option img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s;
+}
+
+.image-option:hover img {
+    transform: scale(1.05);
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .modal .image-grid {
+        gap: 5px;
+    }
+    
+    .modal-content {
+        width: 95%;
+        max-height: 90vh;
+    }
+    
+    .modal-header h2 {
+        font-size: 1.2rem;
+    }
+    
+    .modal-body {
+        padding: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal .image-grid {
+        gap: 5px;
+    }
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+        max-width: 100%;
+    }
+    
+    .controls {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .layout-controls, .reset-controls {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    button {
+        margin: 3px;
+        padding: 6px 10px;
+        font-size: 14px;
+    }
+    
+    .game-board {
+        gap: 8px;
+    }
+    
+    .card {
+        width: 90px;
+        height: 120px;
+        margin: 3px;
+    }
+    
+    .game-board.layout-2x3,
+    .game-board.layout-3x3,
+    .game-board.layout-3x4,
+    .game-board.layout-4x4 {
+        max-width: 100%;
+    }
+    
+    /* 移动端特殊布局调整 */
+    .game-board.layout-4x4 {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 5px;
+    }
+    
+    /* ...existing code for modal... */
+}
+
+@media (max-width: 480px) {
+    .card {
+        width: 70px;
+        height: 95px;
+        border-radius: 6px;
+    }
+    
+    .modal-body {
+        padding: 10px;
+    }
+    
+    .modal .image-grid {
+        grid-template-columns: repeat(auto-fill, minmax(55px, 1fr));
+        gap: 4px;
+    }
+    
+    .close-modal {
+        right: 10px;
+        width: 28px;
+        height: 28px;
+        font-size: 22px;
+    }
+    
+    .modal-header {
+        padding: 12px;
+    }
+    
+    .modal-header h2 {
+        font-size: 1rem;
+    }
+}
+
+/* 适配横屏模式 */
+@media (max-height: 500px) and (orientation: landscape) {
+    .container {
+        padding: 8px;
+    }
+    
+    .controls {
+        margin-bottom: 10px;
+        padding: 5px;
+    }
+    
+    .game-board {
+        margin-bottom: 10px;
+    }
+    
+    .card {
+        width: 60px;
+        height: 80px;
+    }
+    
+    .modal-content {
+        max-height: 95vh;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .modal-body {
+        flex: 1;
+        padding: 10px;
+    }
+    
+    .modal .image-grid {
+        grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+        gap: 5px;
+    }
+}
