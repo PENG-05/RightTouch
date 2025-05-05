@@ -400,36 +400,36 @@ function resetSelectedCard() {
 }
 
 // 添加触摸事件处理，防止滑动误触发
-document.addEventListener('DOMContentLoaded', function() {
-    // ...现有代码...
+// document.addEventListener('DOMContentLoaded', function() {
+//     // ...现有代码...
     
-    // 捕获触摸事件，防止误触发
-    let touchStartY = 0;
+//     // 捕获触摸事件，防止误触发
+//     let touchStartY = 0;
     
-    document.addEventListener('touchstart', function(e) {
-        touchStartY = e.touches[0].clientY;
-    }, { passive: true });
+//     document.addEventListener('touchstart', function(e) {
+//         touchStartY = e.touches[0].clientY;
+//     }, { passive: true });
     
-    document.addEventListener('touchmove', function(e) {
-        const touchY = e.touches[0].clientY;
-        const touchDiff = Math.abs(touchY - touchStartY);
+//     document.addEventListener('touchmove', function(e) {
+//         const touchY = e.touches[0].clientY;
+//         const touchDiff = Math.abs(touchY - touchStartY);
         
-        // 如果是垂直滑动(大于15px)，暂时禁用卡片点击
-        if (touchDiff > 15) {
-            document.querySelectorAll('.card').forEach(card => {
-                card.style.pointerEvents = 'none';
-            });
+//         // 如果是垂直滑动(大于15px)，暂时禁用卡片点击
+//         if (touchDiff > 15) {
+//             document.querySelectorAll('.card').forEach(card => {
+//                 card.style.pointerEvents = 'none';
+//             });
             
-            // 一段时间后恢复点击
-            clearTimeout(window.reEnablePointerTimeout);
-            window.reEnablePointerTimeout = setTimeout(() => {
-                document.querySelectorAll('.card').forEach(card => {
-                    card.style.pointerEvents = 'auto';
-                });
-            }, 500);
-        }
-    }, { passive: true });
-});
+//             // 一段时间后恢复点击
+//             clearTimeout(window.reEnablePointerTimeout);
+//             window.reEnablePointerTimeout = setTimeout(() => {
+//                 document.querySelectorAll('.card').forEach(card => {
+//                     card.style.pointerEvents = 'auto';
+//                 });
+//             }, 500);
+//         }
+//     }, { passive: true });
+// });
 
 // 自动保存当前游戏状态
 function saveGameState() {
