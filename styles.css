@@ -1380,3 +1380,35 @@ and (orientation: landscape) {
         font-size: 12px;
     }
 }
+
+/* 在已有样式的末尾添加以下内容 */
+
+.user-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 10px 15px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+#welcome-message {
+    font-weight: bold;
+    color: #333;
+}
+
+#logout-btn {
+    padding: 6px 12px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+#logout-btn:hover {
+    background-color: #c82333;
+}

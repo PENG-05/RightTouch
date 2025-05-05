@@ -1,104 +1,56 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-	<title>翻牌游戏</title>
-	<link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>翻牌游戏 - 登录</title>
+    <link rel="stylesheet" href="login.css">
 </head>
-
 <body>
-	<div class="container">
-		<div class="controls">
-			<div class="layout-controls">
-				<span>布局选择：</span>
-				<button id="layout-2x3">2x3</button>
-				<button id="layout-3x3">3x3</button>
-				<button id="layout-3x4">3x4</button>
-				<button id="layout-4x4">4x4</button>
-				<button id="layout-4x5">4x5</button>
-			</div>
-			<div class="reset-controls">
-				<button id="reset-all">全部重置</button>
-				<button id="reset-selected">重置选中图片</button>
-			</div>
-		</div>
+    <div class="login-container">
+        <div class="login-box">
+            <h2>明星对对碰翻牌器登录</h2>
+            <form id="login-form">
+                <div class="input-group">
+                    <label for="username">用户名</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">密码</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="error-message" id="error-message"></div>
+                <button type="submit" class="login-btn">登录</button>
+            </form>
+        </div>
+    </div>
+    
+    <script src="login.js"></script>
+    <script>
+        // 禁用F12和右键菜单的代码
+        document.addEventListener('keydown', function (e) {
+            // 禁用 F12
+            if (e.key === 'F12' || e.keyCode === 123) {
+                e.preventDefault();
+                return false;
+            }
 
-		<div class="game-board" id="game-board">
-			<!-- 翻牌区域，由JavaScript生成 -->
-		</div>
+            // 禁用 Ctrl+Shift+I (Chrome开发者工具快捷键)
+            if ((e.ctrlKey && e.shiftKey && e.keyCode === 73) ||
+                // 禁用 Ctrl+Shift+J (Chrome控制台)
+                (e.ctrlKey && e.shiftKey && e.keyCode === 74) ||
+                // 禁用 Ctrl+U (查看源代码)
+                (e.ctrlKey && e.keyCode === 85)) {
+                e.preventDefault();
+                return false;
+            }
+        });
 
-		<!-- 图片选择模态弹窗 -->
-		<div id="image-modal" class="modal">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h2>请选择一张图片</h2>
-					<span class="close-modal" id="closeModalBtn" onclick="closeModal()">&times;</span>
-				</div>
-				<div class="modal-body">
-					<div id="modal-image-grid" class="image-grid">
-						<!-- 图片选择区域，由JavaScript生成 -->
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="cancel-btn" onclick="closeModal()">取消</button>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- 防止滚动重置问题的辅助元素 -->
-		<div id="scroll-protector" style="display:none;"></div>
-		
-		<!-- 添加恢复上次状态的按钮 -->
-		<div class="restore-section">
-			<button id="restore-state" class="restore-btn">恢复上次状态</button>
-			<span id="save-status" class="save-status"></span>
-		</div>
-
-		<div class="donation-section">
-			<h3 class="donation-title">打赏</h3>
-			<div class="donation-content">
-				<p>如果你觉得这个对你有帮助，你可以帮作者买一杯咖啡表示支持，创作不易，谢谢老板！❤❤❤</p>
-				<p class="donation-en">If you think this project is helpful to you, you can help the author buy a cup of coffee
-					to show your support!</p>
-				<div class="pay-img">
-					<img src="./pay-image/wechat.jpg" alt="微信支付" />
-					<img src="./pay-image/alipay.jpg" alt="支付宝" />
-				</div>
-			</div>
-
-			<p class="copyright">著作权归 街角音20区-角色ID-400004000048417 所有 !!!</p>
-		</div>
-	</div>
-
-	<script src="script.js"></script>
-	<script>
-		// 添加禁用F12和右键菜单的代码
-		document.addEventListener('keydown', function (e) {
-			// 禁用 F12
-			if (e.key === 'F12' || e.keyCode === 123) {
-				e.preventDefault();
-				return false;
-			}
-
-			// 禁用 Ctrl+Shift+I (Chrome开发者工具快捷键)
-			if ((e.ctrlKey && e.shiftKey && e.keyCode === 73) ||
-				// 禁用 Ctrl+Shift+J (Chrome控制台)
-				(e.ctrlKey && e.shiftKey && e.keyCode === 74) ||
-				// 禁用 Ctrl+U (查看源代码)
-				(e.ctrlKey && e.keyCode === 85)) {
-				e.preventDefault();
-				return false;
-			}
-		});
-
-		// 禁用右键菜单
-		document.addEventListener('contextmenu', function (e) {
-			e.preventDefault();
-			return false;
-		});
-	</script>
+        // 禁用右键菜单
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+            return false;
+        });
+    </script>
 </body>
-
 </html>
