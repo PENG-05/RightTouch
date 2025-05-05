@@ -381,7 +381,7 @@ function resetAllCards() {
     resetModeActive = false; // 确保退出重置模式
     
     // 添加自动保存
-    saveGameState();
+    // saveGameState();
 }
 
 // 重置选中的卡片
