@@ -30,7 +30,34 @@ const config = {
     ],
     backgroundImage: 'bg.png',
     currentLayout: '2x3',
-    selectedCard: null
+    selectedCard: null,
+    autoSave: true,
+    lastSaved: null
+};
+
+// 添加本地存储功能
+const storage = {
+    save: function(data) {
+        try {
+            const serializedData = JSON.stringify(data);
+            localStorage.setItem('cardGameState', serializedData);
+            return true;
+        } catch (error) {
+            console.error('保存状态失败:', error);
+            return false;
+        }
+    },
+    
+    load: function() {
+        try {
+            const serializedData = localStorage.getItem('cardGameState');
+            if (!serializedData) return null;
+            return JSON.parse(serializedData);
+        } catch (error) {
+            console.error('加载状态失败:', error);
+            return null;
+        }
+    }
 };
 
 // DOM元素
@@ -149,6 +176,26 @@ function initGame() {
         resetModeActive = true;
         alert('请点击要重置的图片');
     });
+
+    // 添加恢复按钮事件监听
+    document.getElementById('restore-state').addEventListener('click', restoreGameState);
+    
+    // 尝试从本地存储加载游戏状态
+    const savedState = storage.load();
+    if (savedState) {
+        // 如果有保存的状态，则使用该布局
+        config.currentLayout = savedState.layout;
+    }
+    
+    // 设置初始布局
+    setLayout(config.currentLayout);
+    
+    // 如果有保存的状态，延迟一点时间后恢复它
+    if (savedState) {
+        setTimeout(() => {
+            restoreGameState();
+        }, 300);
+    }
 }
 
 // 检测是否为移动设备
@@ -252,6 +299,9 @@ function handleCardClick(event) {
         // 显示模态框
         openModal();
     }
+
+    // 在函数末尾添加自动保存
+    setTimeout(saveGameState, 100); // 延迟一点以确保UI更新完成
 }
 
 // 创建图片选择网格（在模态框中）
@@ -309,6 +359,9 @@ function changeCardImage(imageSrc) {
         // 移除选中状态
         config.selectedCard.classList.remove('selected');
         config.selectedCard = null;
+        
+        // 添加自动保存
+        saveGameState();
     }
 }
 
@@ -326,6 +379,9 @@ function resetAllCards() {
         config.selectedCard = null;
     }
     resetModeActive = false; // 确保退出重置模式
+    
+    // 添加自动保存
+    saveGameState();
 }
 
 // 重置选中的卡片
@@ -338,6 +394,9 @@ function resetSelectedCard() {
         config.selectedCard.classList.remove('selected');
         config.selectedCard = null;
     }
+
+    // 在函数末尾添加自动保存
+    saveGameState();
 }
 
 // 添加触摸事件处理，防止滑动误触发
@@ -371,6 +430,75 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }, { passive: true });
 });
+
+// 自动保存当前游戏状态
+function saveGameState() {
+    if (!config.autoSave) return;
+    
+    const cards = document.querySelectorAll('.card');
+    const gameState = {
+        layout: config.currentLayout,
+        cards: [],
+        timestamp: new Date().toISOString()
+    };
+    
+    cards.forEach(card => {
+        const img = card.querySelector('img');
+        gameState.cards.push({
+            index: card.dataset.index,
+            src: img.src,
+            selected: card.classList.contains('selected')
+        });
+    });
+    
+    const saved = storage.save(gameState);
+    if (saved) {
+        config.lastSaved = new Date();
+        showSaveStatus('已自动保存');
+    }
+}
+
+// 显示保存状态提示
+function showSaveStatus(message) {
+    const statusElement = document.getElementById('save-status');
+    statusElement.textContent = message;
+    statusElement.classList.add('show');
+    
+    setTimeout(() => {
+        statusElement.classList.remove('show');
+    }, 2000);
+}
+
+// 恢复上一次保存的游戏状态
+function restoreGameState() {
+    const gameState = storage.load();
+    if (!gameState) {
+        alert('没有找到保存的游戏状态');
+        return;
+    }
+    
+    // 首先设置正确的布局
+    setLayout(gameState.layout);
+    
+    // 延迟一点时间以确保布局已经渲染
+    setTimeout(() => {
+        // 恢复每个卡片的状态
+        gameState.cards.forEach(savedCard => {
+            const card = document.querySelector(`.card[data-index="${savedCard.index}"]`);
+            if (card) {
+                const img = card.querySelector('img');
+                img.src = savedCard.src;
+                
+                if (savedCard.selected) {
+                    card.classList.add('selected');
+                    config.selectedCard = card;
+                }
+            }
+        });
+        
+        showSaveStatus('状态已恢复');
+    }, 100);
+}
 
 // 页面加载完成后初始化游戏
 document.addEventListener('DOMContentLoaded', initGame);

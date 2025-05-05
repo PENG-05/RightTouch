@@ -49,6 +49,12 @@
 
 		<!-- 防止滚动重置问题的辅助元素 -->
 		<div id="scroll-protector" style="display:none;"></div>
+		
+		<!-- 添加恢复上次状态的按钮 -->
+		<div class="restore-section">
+			<button id="restore-state" class="restore-btn">恢复上次状态</button>
+			<span id="save-status" class="save-status"></span>
+		</div>
 
 		<div class="donation-section">
 			<h3 class="donation-title">打赏</h3>
@@ -67,7 +73,7 @@
 	</div>
 
 	<script src="script.js"></script>
-	<script>
+	<!-- <script>
 		// 添加禁用F12和右键菜单的代码
 		document.addEventListener('keydown', function (e) {
 			// 禁用 F12
@@ -92,7 +98,7 @@
 			e.preventDefault();
 			return false;
 		});
-	</script>
+	</script> -->
 </body>
 
 </html>

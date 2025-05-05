@@ -1320,3 +1320,63 @@ and (orientation: landscape) {
         margin: 2px; /* 从3px减小到2px */
     }
 }
+
+/* 恢复按钮区域样式 */
+.restore-section {
+    margin: 15px auto;
+    text-align: center;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+.restore-btn {
+    padding: 8px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.restore-btn:hover {
+    background-color: #0069d9;
+}
+
+.restore-btn:active {
+    background-color: #0062cc;
+    transform: scale(0.98);
+}
+
+.save-status {
+    font-size: 14px;
+    color: #666;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+.save-status.show {
+    opacity: 1;
+}
+
+/* 为移动设备优化恢复按钮 */
+@media (max-width: 768px) {
+    .restore-section {
+        margin: 10px auto;
+        padding: 8px;
+    }
+    
+    .restore-btn {
+        padding: 6px 12px;
+        font-size: 14px;
+    }
+    
+    .save-status {
+        font-size: 12px;
+    }
+}
