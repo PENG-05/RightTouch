@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // 示例用户凭据 - 实际应用中应该从服务器验证
     const validCredentials = [
         { username: 'admin', password: '1746460398802' },
-        { username: 'user', password: 'peng19980524' }
+        { username: 'user', password: '爱喝喜茶' }
     ];
     
     loginForm.addEventListener('submit', function(e) {
