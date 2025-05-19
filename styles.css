@@ -264,7 +264,7 @@ button:hover {
 .modal .image-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
-    gap: 5px;
+    gap: 15px;
     padding: 0;
 }
 
