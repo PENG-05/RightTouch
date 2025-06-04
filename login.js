@@ -24,6 +24,11 @@ document.addEventListener('DOMContentLoaded', function() {
     june8End.setDate(8);
     june8End.setHours(23, 59, 59);
     
+    // 创建一个月后的日期
+    const oneMonthLater = new Date(today);
+    oneMonthLater.setMonth(today.getMonth() + 1);
+    oneMonthLater.setHours(23, 59, 59);
+    
     // 示例用户凭据 - 实际应用中应该从服务器验证
     const validCredentials = [
         { username: 'admin', password: '1746460398802' },
@@ -39,7 +44,10 @@ document.addEventListener('DOMContentLoaded', function() {
           validTo: threeMonthsLater },
         { username: 'june8', password: 'summer123', 
           validFrom: todayStart, 
-          validTo: june8End }
+          validTo: june8End },
+        { username: 'month', password: 'month123', 
+          validFrom: todayStart, 
+          validTo: oneMonthLater }
     ];
     
     loginForm.addEventListener('submit', function(e) {
