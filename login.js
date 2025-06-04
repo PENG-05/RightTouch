@@ -17,6 +17,13 @@ document.addEventListener('DOMContentLoaded', function() {
     threeMonthsLater.setMonth(today.getMonth() + 3);
     threeMonthsLater.setHours(23, 59, 59);
     
+    // 创建6月8号的日期
+    const june8End = new Date();
+    june8End.setFullYear(2023);
+    june8End.setMonth(5); // 月份是从0开始的，所以6月是5
+    june8End.setDate(8);
+    june8End.setHours(23, 59, 59);
+    
     // 示例用户凭据 - 实际应用中应该从服务器验证
     const validCredentials = [
         { username: 'admin', password: '1746460398802' },
@@ -29,7 +36,10 @@ document.addEventListener('DOMContentLoaded', function() {
           validTo: todayEnd },
         { username: 'quarter', password: 'season123', 
           validFrom: todayStart, 
-          validTo: threeMonthsLater }
+          validTo: threeMonthsLater },
+        { username: 'june8', password: 'summer123', 
+          validFrom: todayStart, 
+          validTo: june8End }
     ];
     
     loginForm.addEventListener('submit', function(e) {
