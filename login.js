@@ -10,7 +10,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // 示例用户凭据 - 实际应用中应该从服务器验证
     const validCredentials = [
         { username: 'admin', password: '1746460398802' },
-        { username: 'user', password: '爱喝喜茶' }
+        { username: 'user', password: '爱喝喜茶' },
+        { username: 'temp2025', password: 'password123', 
+          validFrom: new Date('2025-06-04'), 
+          validTo: new Date('2025-06-07 23:59:59') }
     ];
     
     loginForm.addEventListener('submit', function(e) {
@@ -18,13 +21,22 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
+        const currentDate = new Date();
         
         // 验证用户凭据
-        const isValid = validCredentials.some(cred => 
+        const user = validCredentials.find(cred => 
             cred.username === username && cred.password === password
         );
         
-        if (isValid) {
+        if (user) {
+            // 检查是否有日期限制
+            if ((user.validFrom && currentDate < user.validFrom) || 
+                (user.validTo && currentDate > user.validTo)) {
+                errorMessage.textContent = '此账号目前无法使用，请检查使用日期！';
+                loginForm.reset();
+                return;
+            }
+            
             // 设置登录状态
             localStorage.setItem('isLoggedIn', 'true');
             localStorage.setItem('username', username);
