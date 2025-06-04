@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 创建6月8号的日期
     const june8End = new Date();
-    june8End.setFullYear(2023);
+    june8End.setFullYear(2025);
     june8End.setMonth(5); // 月份是从0开始的，所以6月是5
     june8End.setDate(8);
     june8End.setHours(23, 59, 59);
@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
           validTo: june8End },
         { username: 'month', password: 'month123', 
           validFrom: todayStart, 
-          validTo: oneMonthLater }
+          validTo: oneMonthLater },
     ];
     
     loginForm.addEventListener('submit', function(e) {
@@ -63,9 +63,12 @@ document.addEventListener('DOMContentLoaded', function() {
         );
         
         if (user) {
+            // 将日期转换为时间戳进行比较
+            const currentTimestamp = currentDate.getTime();
+          
             // 检查是否有日期限制
-            if ((user.validFrom && currentDate < user.validFrom) || 
-                (user.validTo && currentDate > user.validTo)) {
+            if ((user.validFrom && currentTimestamp < user.validFrom.getTime()) || 
+                (user.validTo && currentTimestamp > user.validTo.getTime())) {
                 errorMessage.textContent = '此账号目前无法使用，请检查使用日期！';
                 loginForm.reset();
                 return;
