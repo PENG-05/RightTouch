@@ -7,13 +7,21 @@ document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.getElementById('login-form');
     const errorMessage = document.getElementById('error-message');
     
+    // 创建今天日期的起始和结束
+    const today = new Date();
+    const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0);
+    const todayEnd = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 23, 59, 59);
+    
     // 示例用户凭据 - 实际应用中应该从服务器验证
     const validCredentials = [
         { username: 'admin', password: '1746460398802' },
         { username: 'user', password: '爱喝喜茶' },
         { username: 'temp2025', password: 'password123', 
           validFrom: new Date('2025-06-04'), 
-          validTo: new Date('2025-06-07 23:59:59') }
+          validTo: new Date('2025-06-07 23:59:59') },
+        { username: 'today', password: 'dailypass', 
+          validFrom: todayStart, 
+          validTo: todayEnd }
     ];
     
     loginForm.addEventListener('submit', function(e) {
