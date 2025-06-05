@@ -7,10 +7,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.getElementById('login-form');
     const errorMessage = document.getElementById('error-message');
     
-    // 创建今天日期的起始和结束
+    // 创建今天日期的起始和2025年6月5日的结束
     const today = new Date();
     const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0);
-    const todayEnd = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 23, 59, 59);
+    const todayEnd = new Date(2025, 5, 5, 23, 59, 59); // 设置为2025年6月5日 23:59:59
     
     // 创建三个月后的日期
     const threeMonthsLater = new Date(today);
