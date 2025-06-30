@@ -33,9 +33,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const validCredentials = [
         { username: 'admin', password: '1746460398802' },
         { username: 'user', password: '爱喝喜茶' },
-        { username: 'temp2025', password: 'password123', 
-          validFrom: new Date('2025-06-04'), 
-          validTo: new Date('2025-06-07 23:59:59') },
+        { username: 'threeday', password: 'password123', 
+          validFrom: new Date('2025-06-30'), 
+          validTo: new Date('2025-07-04 23:59:59') },
         { username: 'today', password: 'dailypass', 
           validFrom: todayStart, 
           validTo: todayEnd },
